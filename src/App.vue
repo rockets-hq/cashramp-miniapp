@@ -22,6 +22,7 @@
 import { onMounted, ref } from "vue";
 import TransferModal from "./components/TransferModal.vue";
 import { cashrampClient } from "./utilities/cashramp";
+import { sdk } from "@farcaster/miniapp-sdk";
 
 const showModal = ref(false);
 const mode = ref("deposit");
@@ -42,8 +43,10 @@ async function getCountries() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   getCountries();
+
+  await sdk.actions.ready();
 });
 </script>
 
