@@ -5,30 +5,26 @@
     "signature": ""
   },
   "baseBuilder": {
-    "ownerAddress": "0x"
+    "ownerAddress": "0x506a8e0012Ce96f6833E9e162F2E039ea5dE38B3"
   },
   "miniapp": {
     "version": "1",
     "name": "Cashramp",
-    "homeUrl": "https://ex.co",
-    "iconUrl": "https://ex.co/i.png",
-    "splashImageUrl": "https://ex.co/l.png",
+    "homeUrl": "https://cashramp-miniapp.onrender.com/",
+    "iconUrl": "https://cashramp-miniapp.onrender.com/favicon.png",
+    "splashImageUrl": "https://cashramp-miniapp.onrender.com/cashramp_white.svg",
     "splashBackgroundColor": "#0035de",
-    "webhookUrl": "https://ex.co/api/webhook",
+    "webhookUrl": "",
     "subtitle": "Deposit or withdraw across 10+ African countries via Bank/MoMo",
     "description": "Deposit or withdraw across 10+ African countries via Bank/MoMo",
-    "screenshotUrls": [
-      "https://ex.co/s1.png",
-      "https://ex.co/s2.png",
-      "https://ex.co/s3.png"
-    ],
+    "screenshotUrls": [],
     "primaryCategory": "on-off-ramp",
     "tags": ["cashramp", "miniapp", "baseapp"],
-    "heroImageUrl": "https://ex.co/og.png",
+    "heroImageUrl": "https://cashramp-miniapp.onrender.com/cashramp_white.svg",
     "tagline": "Deposit or withdraw across 10+ African countries via Bank/MoMo",
     "ogTitle": "Cashramp",
     "ogDescription": "Deposit or withdraw across 10+ African countries via Bank/MoMo",
-    "ogImageUrl": "https://ex.co/og.png",
+    "ogImageUrl": "https://cashramp-miniapp.onrender.com/cashramp_white.svg",
     "noindex": true
   }
 }
