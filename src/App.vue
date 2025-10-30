@@ -27,7 +27,6 @@ import { sdk } from "@farcaster/miniapp-sdk";
 const showModal = ref(false);
 const mode = ref("deposit");
 const countries = ref([]);
-const selectedCountryCode = ref("");
 
 function openModal(selectedMode) {
   mode.value = selectedMode;
@@ -43,10 +42,21 @@ async function getCountries() {
   }
 }
 
+async function getAccountInfo() {
+  try {
+    const result = await sdk.actions.viewProfile();
+    console.log("Account info:", result);
+  } catch (err) {
+    console.error("Failed to get account info:", err);
+  }
+}
+
 onMounted(async () => {
   getCountries();
 
   await sdk.actions.ready();
+
+  getAccountInfo();
 });
 </script>
 
