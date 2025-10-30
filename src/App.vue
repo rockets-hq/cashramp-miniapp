@@ -42,27 +42,10 @@ async function getCountries() {
   }
 }
 
-async function getAccountInfo() {
-  try {
-    const result = await sdk.actions.getAddresses();
-    console.log("Account info:", result);
-    if (result && Array.isArray(result) && result.length > 0) {
-      const walletAddress = result[0];
-      console.log("Wallet address:", walletAddress);
-    } else {
-      console.log("No wallet addresses found.");
-    }
-  } catch (err) {
-    console.error("Failed to get wallet address:", err);
-  }
-}
-
 onMounted(async () => {
   getCountries();
 
   await sdk.actions.ready();
-
-  getAccountInfo();
 });
 </script>
 
