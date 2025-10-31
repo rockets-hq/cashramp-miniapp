@@ -62,7 +62,21 @@ export class CashrampClient {
     const data = await this._post(query, { countryCode });
     return data?.marketRate ?? null;
   }
+
+  async confirmTransaction(paymentRequestId, transactionHash) {
+    const query = `
+      mutation ($paymentRequest: String!, $transactionHash: String!) {
+        confirmTransaction(paymentRequest: $paymentRequest, transactionHash: $transactionHash)
+      }
+    `;
+
+    const data = await this._post(query, {
+      paymentRequest: paymentRequestId,
+      transactionHash,
+    });
+
+    return data?.confirmTransaction ?? null;
+  }
 }
 
-// Export a lightweight singleton for convenience in components
 export const cashrampClient = new CashrampClient({});

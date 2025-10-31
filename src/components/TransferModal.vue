@@ -74,8 +74,11 @@ import { computed, onMounted, ref } from "vue";
 import Modal from "./Modal.vue";
 import { cashrampClient } from "@/utilities/cashramp";
 import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
+import { useWriteContract } from "@wagmi/vue";
+import { parseUnits } from "viem";
 
 const { address } = useConnectMiniApp();
+const { writeContract } = useWriteContract();
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
@@ -109,6 +112,9 @@ function close() {
   emit("update:modelValue", false);
 }
 
+const showIframe = ref(false);
+const iframeUrl = ref("");
+
 function initiateTransfer() {
   const params = new URLSearchParams({
     key: import.meta.env.VITE_CASHRAMP_PUBLIC_KEY,
@@ -118,6 +124,7 @@ function initiateTransfer() {
     paymentType: props.mode === "deposit" ? "deposit" : "withdrawal",
     currency: selectedCurrency.value || "",
     address: address.value,
+    isWalletContext: false,
   });
 
   const url = `${import.meta.env.VITE_CASHRAMP_URL}?${params.toString()}`;
@@ -128,17 +135,78 @@ function initiateTransfer() {
   close();
 }
 
-const showIframe = ref(false);
-const iframeUrl = ref("");
-
-onMounted(async () => {
+async function getCountries() {
   try {
     const result = await cashrampClient.getAvailableCountries();
     countries.value = result;
   } catch (err) {
     console.error("Failed to load countries:", err);
   }
+}
+
+onMounted(async () => {
+  getCountries();
+  hookCryptoRequested();
 });
+
+const USDC_BASE_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+const USDC_DECIMALS = 6;
+
+const erc20TransferABI = [
+  {
+    name: "transfer",
+    type: "function",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "to", type: "address" },
+      { name: "amount", type: "uint256" },
+    ],
+    outputs: [{ name: "", type: "bool" }],
+  },
+];
+
+async function requestCrypto(amountUsd, destination) {
+  try {
+    if (!address.value) {
+      throw new Error("Wallet not connected");
+    }
+
+    if (!destination) {
+      throw new Error("Destination address is required");
+    }
+
+    const amountInUnits = parseUnits(amountUsd.toString(), USDC_DECIMALS);
+
+    const hash = await writeContract({
+      address: USDC_BASE_ADDRESS,
+      abi: erc20TransferABI,
+      functionName: "transfer",
+      args: [destination, amountInUnits],
+    });
+
+    console.log("Transfer initiated:", hash);
+    return hash;
+  } catch (error) {
+    console.error("Error requesting crypto:", error);
+    alert(error.message);
+  }
+}
+
+function hookCryptoRequested() {
+  window.addEventListener("message", async (event) => {
+    if (event.origin === "https://useaccrue.com") {
+      const { event: name, payload } = event.data;
+      if (name === "crypto.requested") {
+        const amountUsd = Number(payload.amountCents) / 100;
+        const destination = payload.destinationAddress;
+        const paymentRequestId = payload.paymentRequest;
+
+        const hash = await requestCrypto(amountUsd, destination);
+        await cashrampClient.confirmTransaction(paymentRequestId, hash);
+      }
+    }
+  });
+}
 </script>
 
 <style scoped>
