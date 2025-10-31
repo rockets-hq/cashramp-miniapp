@@ -78,7 +78,7 @@ import { useWriteContract } from "@wagmi/vue";
 import { parseUnits } from "viem";
 
 const { address } = useConnectMiniApp();
-const { writeContract } = useWriteContract();
+const { writeContractAsync } = useWriteContract();
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
@@ -177,19 +177,37 @@ async function requestCrypto(amountUsd, destination) {
 
     const amountInUnits = parseUnits(amountUsd.toString(), USDC_DECIMALS);
 
-    const hash = await writeContract({
+    const hash = await writeContractAsync({
       address: USDC_BASE_ADDRESS,
       abi: erc20TransferABI,
       functionName: "transfer",
       args: [destination, amountInUnits],
     });
 
-    console.log("Transfer initiated:", hash);
+    alert(`Transfer initiated: ${hash}`);
     return hash;
   } catch (error) {
     console.error("Error requesting crypto:", error);
     alert(error.message);
   }
+}
+
+const pollConfirmationInterval = ref(null);
+function pollConfirmation(paymentRequestId, hash) {
+  if (pollConfirmationInterval.value) {
+    clearInterval(pollConfirmationInterval.value);
+    return;
+  }
+
+  pollConfirmationInterval.value = setInterval(async () => {
+    const confirmation = await cashrampClient.confirmTransaction(
+      paymentRequestId,
+      hash
+    );
+    if (confirmation) {
+      clearInterval(pollConfirmationInterval.value);
+    }
+  }, 6000);
 }
 
 function hookCryptoRequested() {
@@ -202,7 +220,7 @@ function hookCryptoRequested() {
         const paymentRequestId = payload.paymentRequest;
 
         const hash = await requestCrypto(amountUsd, destination);
-        await cashrampClient.confirmTransaction(paymentRequestId, hash);
+        pollConfirmation(paymentRequestId, hash);
       }
     }
   });
