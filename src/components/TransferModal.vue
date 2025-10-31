@@ -75,6 +75,8 @@ import Modal from "./Modal.vue";
 import { cashrampClient } from "@/utilities/cashramp";
 import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
 
+const { address } = useConnectMiniApp();
+
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
   mode: { type: String, default: "deposit" },
@@ -108,8 +110,6 @@ function close() {
 }
 
 function initiateTransfer() {
-  const { address } = useConnectMiniApp();
-
   const params = new URLSearchParams({
     key: import.meta.env.VITE_CASHRAMP_PUBLIC_KEY,
     amount: parseFloat(amount.value),
@@ -117,7 +117,7 @@ function initiateTransfer() {
     coin: "USDC",
     paymentType: props.mode === "deposit" ? "deposit" : "withdrawal",
     currency: selectedCurrency.value || "",
-    address: address,
+    address: address.value,
   });
 
   const url = `${import.meta.env.VITE_CASHRAMP_URL}?${params.toString()}`;
