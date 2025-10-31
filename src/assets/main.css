@@ -53,8 +53,9 @@ select {
 }
 
 select {
-  padding-left: 12px !important;
+  padding-left: 16px !important;
   box-sizing: border-box;
+  background-color: white;
 }
 
 select {
