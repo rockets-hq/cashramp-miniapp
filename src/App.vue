@@ -45,12 +45,8 @@ async function getCountries() {
 onMounted(async () => {
   getCountries();
 
-  const { address, connectToWallet } = useConnectMiniApp();
+  const { connectToWallet } = useConnectMiniApp();
   await connectToWallet();
-
-  if (address) {
-    console.log("Connected to wallet:", address);
-  }
 });
 </script>
 
