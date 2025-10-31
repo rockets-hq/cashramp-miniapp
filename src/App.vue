@@ -22,7 +22,7 @@
 import { onMounted, ref } from "vue";
 import TransferModal from "./components/TransferModal.vue";
 import { cashrampClient } from "./utilities/cashramp";
-import { useConnect } from "./composables/useConnect";
+import { useConnectMiniApp } from "./composables/useConnectMiniApp";
 
 const showModal = ref(false);
 const mode = ref("deposit");
@@ -45,7 +45,12 @@ async function getCountries() {
 onMounted(async () => {
   getCountries();
 
-  await useConnect();
+  const { address, connectToWallet } = useConnectMiniApp();
+  await connectToWallet();
+
+  if (address) {
+    console.log("Connected to wallet:", address);
+  }
 });
 </script>
 
