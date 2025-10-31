@@ -2,9 +2,9 @@
   <div class="app-container">
     <img src="@/assets/cashramp.svg" alt="Cashramp" class="logo" />
     <p class="text-introduction text-gray-500">
-      Deposit or withdraw in
+      Deposit or withdraw via Bank/MoMo in
       <span class="text--primary font-bold">{{ countries.length }}</span>
-      African countries via Bank/MoMo
+      African countries
     </p>
     <div class="buttons-container">
       <button class="btn--primary mb-8" @click="openModal('deposit')">
