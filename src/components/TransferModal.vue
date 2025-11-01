@@ -64,7 +64,6 @@ import Modal from "./Modal.vue";
 import AmountInput from "./AmountInput.vue";
 import { cashrampClient } from "@/utilities/cashramp";
 import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
-import { useUSDCBalance } from "@/composables/useUsdcBalance";
 import { useWriteContract } from "@wagmi/vue";
 import { parseUnits } from "viem";
 import { getCountryFlag, shortenAddress } from "@/utilities";
@@ -78,13 +77,13 @@ import { useCopyToClipboard } from "@/composables/useCopyToClipboard";
 
 const { copyToClipboard } = useCopyToClipboard();
 const { address } = useConnectMiniApp();
-const { usdcBalance, fetchBalance } = useUSDCBalance();
 const { writeContractAsync } = useWriteContract();
 const $toast = useToast();
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
   mode: { type: String, default: "deposit" },
+  usdcBalance: { type: String, default: "0.00" },
 });
 
 const emit = defineEmits(["update:modelValue"]);

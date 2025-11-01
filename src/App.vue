@@ -115,7 +115,11 @@
       </div>
     </section>
 
-    <TransferModal v-model="showModal" :mode="mode" />
+    <TransferModal
+      v-model="showModal"
+      :mode="mode"
+      :usdcBalance="usdcBalance"
+    />
   </div>
 </template>
 
@@ -125,7 +129,9 @@ import TransferModal from "./components/TransferModal.vue";
 import { cashrampClient } from "./utilities/cashramp";
 import { useConnectMiniApp } from "./composables/useConnectMiniApp";
 import { getCountryFlag } from "./utilities";
+import { useUSDCBalance } from "./composables/useUsdcBalance";
 
+const { usdcBalance, fetchBalance } = useUSDCBalance();
 const showModal = ref(false);
 const mode = ref("deposit");
 const countries = ref([]);
@@ -149,6 +155,7 @@ onMounted(async () => {
 
   const { connectToWallet } = useConnectMiniApp();
   await connectToWallet();
+  await fetchBalance();
 });
 </script>
 
