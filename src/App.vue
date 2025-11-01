@@ -3,22 +3,39 @@
     <!-- Hero Section -->
     <section class="hero-section">
       <img src="@/assets/cashramp.svg" alt="Cashramp" class="logo" />
-      <div class="hero-content">
-        <div>
-          <h1 class="text-4xl lg:text-5xl font-bold">
-            Cash to USDC and back, instantly.
-          </h1>
-          <p class="mt-2 mb-8 text-gray-500 text-normal lg:text-xl">
-            Add cash from your Bank or MoMo account. Pay across Africa or cash
-            out anytime.
-          </p>
+
+      <div class="mb-8 usp-marquee-container">
+        <div class="usp-marquee">
+          <div class="usp-marquee-track">
+            <span class="usp-pill">Best rates 💸</span>
+            <span class="usp-pill">90s delivery ⚡️</span>
+            <span class="usp-pill">24/7 support 🕑</span>
+            <span class="usp-pill">Reliable ✅</span>
+            <span class="usp-pill">Secure 🔒</span>
+            <span class="usp-pill">Easy onboarding 🤝</span>
+            <span class="usp-pill">Across Africa 🌍</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="usp-pill">Best rates 💸</span>
+            <span class="usp-pill">90s delivery ⚡️</span>
+            <span class="usp-pill">24/7 support 🕑</span>
+            <span class="usp-pill">Reliable ✅</span>
+            <span class="usp-pill">Secure 🔒</span>
+            <span class="usp-pill">Easy onboarding 🤝</span>
+            <span class="usp-pill">Across Africa 🌍</span>
+          </div>
         </div>
-        <div class="flex flex-row gap-4 justify-center">
+      </div>
+
+      <div class="hero-content">
+        <h1 class="text-4xl lg:text-5xl font-bold">
+          Cash to USDC and back, as easy as MoMo.
+        </h1>
+        <div class="mt-8 flex flex-row gap-4 justify-center">
           <button
             class="btn--primary lg:min-w-[120px]"
             @click="openModal('deposit')"
           >
-            <span class="mr-2"><icon :icon="['fas', 'plus']" /></span> Add cash
+            <span class="mr-2"><icon :icon="['fas', 'plus']" /></span> Deposit
           </button>
           <button
             class="btn--outline lg:min-w-[120px]"
@@ -33,11 +50,12 @@
     <section v-if="countries.length > 0" class="countries-section">
       <div class="section-header">
         <h2 class="text-3xl font-bold text-gray-800">
-          Pay across Africa
-          <span><icon :icon="['fas', 'earth-africa']" /></span>
+          Send money anywhere in Africa
+          <span><icon :icon="['fas', 'earth-africa']" /></span>,
+          <span class="text-blue-800">instantly</span>.
         </h2>
-        <p class="text-gray-500 text-base lg:text-xl">
-          Pay any Bank or MoMo account in Africa <strong>in minutes</strong>
+        <p class="mt-2 text-gray-500 text-lg lg:text-xl">
+          Pay any Bank or MoMo account in Africa <strong>in seconds</strong>
           <span class="emoji" aria-label="fast">⚡️</span>
         </p>
       </div>
@@ -63,9 +81,8 @@
     <section class="how-it-works-section">
       <div class="section-header">
         <h2 class="text-3xl font-bold text-gray-800">How it works</h2>
-        <p class="text-gray-500 text-base lg:text-xl">
-          The quick, secure way to go from cash to crypto — made for everyday
-          Africans.
+        <p class="mt-2 text-gray-500 text-lg lg:text-xl">
+          The fastest, most reliable way to move money in and out of USDC.
         </p>
       </div>
       <div class="explanations-container">
@@ -74,9 +91,9 @@
           <div class="explanation-content">
             <h3 class="explanation-title">P2P agent network</h3>
             <p class="explanation-description">
-              Cashramp connects you to a continent-wide network of trusted
-              agents, making it possible to seamlessly go from cash to USDC and
-              back.
+              Cashramp connects you to trusted agents across Africa, making it
+              possible to seamlessly go from cash to USDC and back as,
+              <span class="font-bold text-blue-800">easy as MoMo</span>.
             </p>
           </div>
         </div>
@@ -85,8 +102,10 @@
           <div class="explanation-content">
             <h3 class="explanation-title">Adding cash</h3>
             <p class="explanation-description">
-              Add cash from your Bank or MoMo account in seconds. Your deposit
-              is instantly converted to USDC and delivered to your wallet.
+              Deposit from your Bank or MoMo account
+              <span class="font-bold text-blue-800">in seconds</span>. Your
+              deposit is instantly converted to USDC and delivered to your
+              wallet.
             </p>
           </div>
         </div>
@@ -97,8 +116,9 @@
           <div class="explanation-content">
             <h3 class="explanation-title">Paying across Africa</h3>
             <p class="explanation-description">
-              Whether it's a friend, family member, or a business, you can send
-              local currency directly to their Bank or MoMo account.
+              Whether it's a friend, family member, or a business, send local
+              currency directly to their
+              <span class="font-bold text-blue-800">Bank or MoMo account</span>.
             </p>
           </div>
         </div>
@@ -108,7 +128,8 @@
             <h3 class="explanation-title">Cashing out</h3>
             <p class="explanation-description">
               Instantly withdraw USDC to your Bank or MoMo account. Receive your
-              money in your local currency within minutes.
+              money in your preferred local currency
+              <span class="font-bold text-blue-800">within minutes</span>.
             </p>
           </div>
         </div>
@@ -247,6 +268,93 @@ onMounted(async () => {
 
 .explanation-description {
   @apply text-sm text-gray-500 leading-relaxed;
+}
+
+.usp-marquee-container {
+  @apply overflow-hidden w-full;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.usp-marquee {
+  @apply overflow-hidden;
+}
+
+.usp-marquee-track {
+  @apply flex gap-4;
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
+
+.usp-pill {
+  @apply px-3 py-1.5 rounded-full text-sm font-bold whitespace-nowrap bg-white;
+  flex-shrink: 0;
+  color: black;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  transform: scale(1);
+  transition: all 0.3s ease;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.usp-pill::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(191, 191, 233, 0.153),
+    transparent
+  );
+  animation: shine 3s infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.39),
+      0 0 20px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 20px 0 rgba(255, 255, 255, 0.5),
+      0 0 30px rgba(255, 255, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @media screen and (max-width: 768px) {

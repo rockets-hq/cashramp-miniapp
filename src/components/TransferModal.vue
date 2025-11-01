@@ -14,18 +14,27 @@
     </div>
 
     <label>Country</label>
-    <select id="country" v-model="selectedCurrency" class="input mb-4">
-      <option
-        v-for="country in countries"
-        :key="country.currency.isoCode"
-        :value="country.currency.isoCode"
+    <div class="country-select-wrapper">
+      <select id="country" v-model="selectedCurrency" class="input">
+        <option
+          v-for="country in countries"
+          :key="country.currency.isoCode"
+          :value="country.currency.isoCode"
+        >
+          {{ country.name }} • {{ country.currency.isoCode }}
+          {{ getCountryFlag(country.code) }}
+        </option>
+      </select>
+      <span
+        v-if="estimatedLocalCurrency && selectedCountryCode"
+        class="text-xs text-blue-800 mt-1 local-currency-estimate"
       >
-        {{ country.name }} • {{ country.currency.isoCode }}
-        {{ getCountryFlag(country.code) }}
-      </option>
-    </select>
+        ≈ <strong>{{ estimatedLocalCurrency }}</strong>
+        {{ selectedCurrency }}
+      </span>
+    </div>
 
-    <AmountInput v-model="amount" title="Amount">
+    <AmountInput v-model="amount" title="Amount" class="mt-4">
       <template #suffix>
         <img src="@/assets/usdc.webp" alt="USDC" class="h-4 w-4" />
         <span class="text-sm font-semibold text-gray-500">USDC</span>
@@ -59,18 +68,19 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import Modal from "./Modal.vue";
 import AmountInput from "./AmountInput.vue";
 import { cashrampClient } from "@/utilities/cashramp";
 import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
 import { useWriteContract } from "@wagmi/vue";
 import { parseUnits } from "viem";
-import { getCountryFlag, shortenAddress } from "@/utilities";
+import { getCountryFlag, shortenAddress, formatAmount } from "@/utilities";
 import {
   USDC_BASE_ADDRESS,
   USDC_DECIMALS,
   ERC20_TRANSFER_ABI,
+  COUNTRIES_STORAGE_KEY,
 } from "@/utilities/constants";
 import { useToast } from "vue-toast-notification";
 import { useCopyToClipboard } from "@/composables/useCopyToClipboard";
@@ -98,7 +108,7 @@ const open = computed({
 });
 
 const computedTitle = computed(() => {
-  return props.mode === "deposit" ? "Add cash" : "Cash out";
+  return props.mode === "deposit" ? "Deposit" : "Cash out";
 });
 
 const amount = ref("");
@@ -108,6 +118,8 @@ const amountMeetsMinimum = computed(() => {
 
 const countries = ref([]);
 const selectedCurrency = ref("NGN");
+const marketRate = ref(null);
+const selectedCountryCode = ref(null);
 
 function close() {
   emit("update:modelValue", false);
@@ -140,12 +152,80 @@ async function getCountries() {
   try {
     const result = await cashrampClient.getAvailableCountries();
     countries.value = result;
+
+    const country = result.find(
+      (c) => c.currency.isoCode === selectedCurrency.value
+    );
+    if (country) {
+      selectedCountryCode.value = country.code;
+      await fetchMarketRate(country.code);
+    } else {
+      if (result.length > 0) {
+        selectedCurrency.value = result[0].currency.isoCode;
+      }
+    }
   } catch (err) {
     $toast.error(`Failed to load countries: ${err.message}`);
   }
 }
 
+async function fetchMarketRate(countryCode) {
+  if (!countryCode) {
+    marketRate.value = null;
+    return;
+  }
+
+  try {
+    const rate = await cashrampClient.getMarketRate(countryCode);
+    marketRate.value = rate;
+  } catch (err) {
+    console.error(`Failed to load market rate: ${err.message}`);
+    marketRate.value = null;
+  }
+}
+
+watch(selectedCurrency, (newCurrency) => {
+  if (newCurrency) {
+    localStorage.setItem(COUNTRIES_STORAGE_KEY, newCurrency);
+  }
+
+  const country = countries.value.find(
+    (c) => c.currency.isoCode === newCurrency
+  );
+  if (country) {
+    selectedCountryCode.value = country.code;
+    fetchMarketRate(country.code);
+  } else {
+    selectedCountryCode.value = null;
+    marketRate.value = null;
+  }
+});
+
+const estimatedLocalCurrency = computed(() => {
+  if (!amount.value || !marketRate.value || parseFloat(amount.value) <= 0) {
+    return null;
+  }
+
+  const usdcAmount = parseFloat(amount.value);
+  const rate =
+    props.mode === "deposit"
+      ? marketRate.value.depositRate
+      : marketRate.value.withdrawalRate;
+
+  if (!rate || rate <= 0) {
+    return null;
+  }
+
+  const localAmount = usdcAmount * rate;
+  return formatAmount(localAmount);
+});
+
 onMounted(() => {
+  const savedCurrency = localStorage.getItem(COUNTRIES_STORAGE_KEY);
+  if (savedCurrency) {
+    selectedCurrency.value = savedCurrency;
+  }
+
   getCountries();
   hookCryptoRequested();
 });
@@ -224,8 +304,13 @@ function hookCryptoRequested() {
   font-size: 0.9rem;
 }
 
-#country {
-  margin-bottom: 16px;
+.country-select-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.local-currency-estimate {
+  text-align: right;
 }
 
 .wallet-balance-text {
