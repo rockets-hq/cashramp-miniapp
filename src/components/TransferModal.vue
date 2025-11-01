@@ -19,7 +19,7 @@
       </template>
     </AmountInput>
     <span class="wallet-balance-text"
-      ><strong>{{ walletUsdcBalance }}</strong> USDC available</span
+      ><strong>{{ usdcBalance }}</strong> USDC available</span
     >
 
     <template #footer>
@@ -51,6 +51,7 @@ import Modal from "./Modal.vue";
 import AmountInput from "./AmountInput.vue";
 import { cashrampClient } from "@/utilities/cashramp";
 import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
+import { useUSDCBalance } from "@/composables/useUsdcBalance";
 import { useWriteContract } from "@wagmi/vue";
 import { parseUnits } from "viem";
 import { getCountryFlag } from "@/utilities";
@@ -61,7 +62,8 @@ import {
 } from "@/utilities/constants";
 import { useToast } from "vue-toast-notification";
 
-const { address, walletUsdcBalance } = useConnectMiniApp();
+const { address } = useConnectMiniApp();
+const { fetchBalance, usdcBalance } = useUSDCBalance();
 const { writeContractAsync } = useWriteContract();
 const $toast = useToast();
 
@@ -129,9 +131,10 @@ async function getCountries() {
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   getCountries();
   hookCryptoRequested();
+  fetchBalance();
 });
 
 async function requestCrypto(amountUsd, destination) {
