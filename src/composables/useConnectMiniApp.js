@@ -1,3 +1,4 @@
+import { ref } from "vue";
 import { sdk } from "@farcaster/miniapp-sdk";
 import { useAccount, useReadContract } from "@wagmi/vue";
 import { farcasterMiniApp as miniAppConnector } from "@farcaster/miniapp-wagmi-connector";

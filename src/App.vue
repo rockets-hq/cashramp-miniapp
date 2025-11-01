@@ -5,9 +5,9 @@
       <img src="@/assets/cashramp.svg" alt="Cashramp" class="logo" />
       <div class="hero-content">
         <div class="hero-text">
-          <h1 class="hero-headline">Your cash, without borders.</h1>
+          <h1 class="hero-headline">Cash to USDC and back, instantly.</h1>
           <p class="hero-subheadline">
-            Add cash from your bank or MoMo instantly. Pay across Africa or cash
+            Add cash from your Bank or MoMo account. Pay across Africa or cash
             out anytime.
           </p>
         </div>
@@ -24,10 +24,10 @@
 
     <section v-if="countries.length > 0" class="countries-section">
       <div class="section-header">
-        <h2 class="section-title">Spend across Africa</h2>
+        <h2 class="section-title">Pay across Africa</h2>
         <p class="section-subtitle">
-          Send money to <strong>{{ countries.length }}</strong> countries in
-          minutes <span class="emoji" aria-label="fast">⚡️</span>
+          Pay any Bank or MoMo account in Africa <strong>in minutes</strong>
+          <span class="emoji" aria-label="fast">⚡️</span>
         </p>
       </div>
       <div class="countries-grid">
@@ -38,8 +38,9 @@
         >
           <div class="country-flag">{{ getCountryFlag(country.code) }}</div>
           <div class="country-info">
-            <span class="country-name">{{ country.name }}</span>
-            <span class="country-currency">{{ country.currency.symbol }}</span>
+            <span class="country-name"
+              >{{ country.name }} ({{ country.currency.isoCode }})</span
+            >
           </div>
         </div>
       </div>
@@ -49,7 +50,10 @@
     <section class="how-it-works-section">
       <div class="section-header">
         <h2 class="section-title">How it works</h2>
-        <p class="section-subtitle">Fast, easy, and secure.</p>
+        <p class="section-subtitle">
+          The quick, secure way to go from cash to crypto — made for everyday
+          Africans.
+        </p>
       </div>
       <div class="steps-container">
         <div class="step">
@@ -65,7 +69,7 @@
         <div class="step">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3 class="step-title">Send across Africa</h3>
+            <h3 class="step-title">Pay across Africa</h3>
             <p class="step-description">
               Instantly cash out your USDC to any Bank or MoMo account in
               Africa.

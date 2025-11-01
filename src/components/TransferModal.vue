@@ -4,10 +4,10 @@
     <select id="country" v-model="selectedCurrency" class="input">
       <option
         v-for="country in countries"
-        :key="country.currency.symbol"
-        :value="country.currency.symbol"
+        :key="country.currency.isoCode"
+        :value="country.currency.isoCode"
       >
-        {{ country.name }} • {{ country.currency.symbol }}
+        {{ country.name }} • {{ country.currency.isoCode }}
         {{ getCountryFlag(country.code) }}
       </option>
     </select>
@@ -130,7 +130,6 @@ async function getCountries() {
 onMounted(async () => {
   getCountries();
   hookCryptoRequested();
-  updateWalletUsdcBalance();
 });
 
 async function requestCrypto(amountUsd, destination) {

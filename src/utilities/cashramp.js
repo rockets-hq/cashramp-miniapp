@@ -35,7 +35,7 @@ export class CashrampClient {
           name
           code
           currency {
-            symbol
+            isoCode
           }
         }
       }
