@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div>
     <label v-if="title" :for="inputId" class="section-label">{{ title }}</label>
     <div class="input-wrapper">
       <input
@@ -34,11 +34,6 @@ const inputId = computed(() => {
 </script>
 
 <style scoped>
-.section {
-  margin-bottom: 16px;
-  text-align: left;
-}
-
 .input-wrapper {
   position: relative;
   display: flex;

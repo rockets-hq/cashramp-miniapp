@@ -1,18 +1,16 @@
 <template>
   <Modal v-model="open" :title="computedTitle">
-    <div class="section">
-      <label for="country" class="section-label">Country</label>
-      <select id="country" v-model="selectedCurrency" class="input">
-        <option
-          v-for="country in countries"
-          :key="country.currency.symbol"
-          :value="country.currency.symbol"
-        >
-          {{ country.name }} • {{ country.currency.symbol }}
-          {{ getCountryFlag(country.code) }}
-        </option>
-      </select>
-    </div>
+    <label for="country" class="section-label">Country</label>
+    <select id="country" v-model="selectedCurrency" class="input">
+      <option
+        v-for="country in countries"
+        :key="country.currency.symbol"
+        :value="country.currency.symbol"
+      >
+        {{ country.name }} • {{ country.currency.symbol }}
+        {{ getCountryFlag(country.code) }}
+      </option>
+    </select>
 
     <AmountInput v-model="amount" title="Amount">
       <template #suffix>
@@ -20,6 +18,9 @@
         <span class="usdc-text">USDC</span>
       </template>
     </AmountInput>
+    <span class="wallet-balance-text"
+      ><strong>{{ walletUsdcBalance }}</strong> USDC available</span
+    >
 
     <template #footer>
       <button
@@ -53,8 +54,13 @@ import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
 import { useWriteContract } from "@wagmi/vue";
 import { parseUnits } from "viem";
 import { getCountryFlag } from "@/utilities";
+import {
+  USDC_BASE_ADDRESS,
+  USDC_DECIMALS,
+  ERC20_TRANSFER_ABI,
+} from "@/utilities/constants";
 
-const { address } = useConnectMiniApp();
+const { address, getUsdcBalance } = useConnectMiniApp();
 const { writeContractAsync } = useWriteContract();
 
 const props = defineProps({
@@ -124,23 +130,14 @@ async function getCountries() {
 onMounted(async () => {
   getCountries();
   hookCryptoRequested();
+  updateWalletUsdcBalance();
 });
 
-const USDC_BASE_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
-const USDC_DECIMALS = 6;
-
-const erc20TransferABI = [
-  {
-    name: "transfer",
-    type: "function",
-    stateMutability: "nonpayable",
-    inputs: [
-      { name: "to", type: "address" },
-      { name: "amount", type: "uint256" },
-    ],
-    outputs: [{ name: "", type: "bool" }],
-  },
-];
+const walletUsdcBalance = ref(0);
+async function updateWalletUsdcBalance() {
+  const balance = await getUsdcBalance();
+  walletUsdcBalance.value = parseFloat(balance).toFixed(USDC_DECIMALS);
+}
 
 async function requestCrypto(amountUsd, destination) {
   try {
@@ -156,7 +153,7 @@ async function requestCrypto(amountUsd, destination) {
 
     const hash = await writeContractAsync({
       address: USDC_BASE_ADDRESS,
-      abi: erc20TransferABI,
+      abi: ERC20_TRANSFER_ABI,
       functionName: "transfer",
       args: [destination, amountInUnits],
     });
@@ -216,8 +213,16 @@ function hookCryptoRequested() {
   font-size: 0.9rem;
 }
 
-.section {
+#country {
   margin-bottom: 16px;
+}
+
+.wallet-balance-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  margin-top: 4px;
+  display: boock;
 }
 
 .options {
