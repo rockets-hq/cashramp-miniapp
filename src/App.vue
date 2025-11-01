@@ -28,7 +28,7 @@
 
       <div class="hero-content">
         <h1 class="text-4xl lg:text-5xl font-bold">
-          Cash to USDC and back, as easy as MoMo.
+          Cash ↔ USDC, as easy as MoMo. 🌍⚡️
         </h1>
         <div class="mt-8 flex flex-row gap-4 justify-center">
           <button
@@ -52,7 +52,7 @@
         <h2 class="text-3xl font-bold text-gray-800">
           Send money anywhere in Africa
           <span><icon :icon="['fas', 'earth-africa']" /></span>,
-          <span class="text-blue-800">instantly</span>.
+          <span class="text-blue-800">instantly.</span>
         </h2>
         <p class="mt-2 text-gray-500 text-lg lg:text-xl">
           Pay any Bank or MoMo account in Africa <strong>in seconds</strong>
