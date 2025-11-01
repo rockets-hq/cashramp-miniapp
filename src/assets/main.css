@@ -18,6 +18,12 @@
   font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
+label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
 .mb-8 {
   margin-bottom: 8px;
 }
@@ -28,6 +34,10 @@
 
 .mb-32 {
   margin-bottom: 32px;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .font-bold {

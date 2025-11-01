@@ -1,28 +1,6 @@
 <template>
   <Modal v-model="open" :title="computedTitle">
     <div class="section">
-      <label for="network" class="section-label">Network</label>
-      <div class="options">
-        <div class="option" id="network">
-          <img src="@/assets/base.webp" alt="Base" />
-          <span class="font-bold">Base</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <label for="token" class="section-label">Token</label>
-      <div class="options">
-        <div class="option" id="token">
-          <img src="@/assets/usdc.webp" alt="USDC" />
-          <div class="token-texts">
-            <span class="font-bold">USDC</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
       <label for="country" class="section-label">Country</label>
       <select id="country" v-model="selectedCurrency" class="input">
         <option
@@ -30,25 +8,22 @@
           :key="country.currency.symbol"
           :value="country.currency.symbol"
         >
-          {{ country.name }}
+          {{ country.name }} • {{ country.currency.symbol }}
+          {{ getCountryFlag(country.code) }}
         </option>
       </select>
     </div>
 
-    <div class="section">
-      <label for="amount" class="section-label">Amount (USDC)</label>
-      <input
-        v-model="amount"
-        type="number"
-        class="input"
-        placeholder="0.00"
-        id="amount"
-      />
-    </div>
+    <AmountInput v-model="amount" title="Amount">
+      <template #suffix>
+        <img src="@/assets/usdc.webp" alt="USDC" class="usdc-icon" />
+        <span class="usdc-text">USDC</span>
+      </template>
+    </AmountInput>
 
     <template #footer>
       <button
-        class="btn--primary"
+        class="btn--primary w-full"
         @click="initiateTransfer"
         :disabled="!amountMeetsMinimum"
       >
@@ -72,10 +47,12 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import Modal from "./Modal.vue";
+import AmountInput from "./AmountInput.vue";
 import { cashrampClient } from "@/utilities/cashramp";
 import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
 import { useWriteContract } from "@wagmi/vue";
 import { parseUnits } from "viem";
+import { getCountryFlag } from "@/utilities";
 
 const { address } = useConnectMiniApp();
 const { writeContractAsync } = useWriteContract();
@@ -97,7 +74,7 @@ const open = computed({
 });
 
 const computedTitle = computed(() => {
-  return `${props.mode} ${selectedCurrency.value}`;
+  return props.mode === "deposit" ? "Add cash" : "Cash out";
 });
 
 const amount = ref("");
@@ -227,16 +204,20 @@ function hookCryptoRequested() {
 }
 </script>
 
-<style scoped>
-.section {
-  margin-bottom: 16px;
-  text-align: left;
+<style>
+.usdc-icon {
+  width: 16px;
+  height: 16px;
 }
 
-.section-label {
-  display: block;
-  font-size: 1rem;
-  margin-bottom: 8px;
+.usdc-text {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.section {
+  margin-bottom: 16px;
 }
 
 .options {
