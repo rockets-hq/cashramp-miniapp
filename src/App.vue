@@ -98,7 +98,10 @@ import { onMounted, ref } from "vue";
 import TransferModal from "./components/TransferModal.vue";
 import { cashrampClient } from "./utilities/cashramp";
 import { useConnectMiniApp } from "./composables/useConnectMiniApp";
+import { useUSDCBalance } from "@/composables/useUsdcBalance";
 import { getCountryFlag } from "./utilities";
+
+const { fetchBalance } = useUSDCBalance();
 
 const showModal = ref(false);
 const mode = ref("deposit");
@@ -123,6 +126,7 @@ onMounted(async () => {
 
   const { connectToWallet } = useConnectMiniApp();
   await connectToWallet();
+  await fetchBalance();
 });
 </script>
 

@@ -1,5 +1,8 @@
 <template>
   <Modal v-model="open" :title="computedTitle">
+    <label class="section-label">Wallet address</label>
+    <p class="wallet-address-text">{{ shortenAddress(address) || "N/A" }}</p>
+
     <label for="country" class="section-label">Country</label>
     <select id="country" v-model="selectedCurrency" class="input">
       <option
@@ -54,7 +57,7 @@ import { useConnectMiniApp } from "@/composables/useConnectMiniApp";
 import { useUSDCBalance } from "@/composables/useUsdcBalance";
 import { useWriteContract } from "@wagmi/vue";
 import { parseUnits } from "viem";
-import { getCountryFlag } from "@/utilities";
+import { getCountryFlag, shortenAddress } from "@/utilities";
 import {
   USDC_BASE_ADDRESS,
   USDC_DECIMALS,
@@ -63,7 +66,7 @@ import {
 import { useToast } from "vue-toast-notification";
 
 const { address } = useConnectMiniApp();
-const { fetchBalance, usdcBalance } = useUSDCBalance();
+const { usdcBalance } = useUSDCBalance();
 const { writeContractAsync } = useWriteContract();
 const $toast = useToast();
 
@@ -134,7 +137,6 @@ async function getCountries() {
 onMounted(() => {
   getCountries();
   hookCryptoRequested();
-  fetchBalance();
 });
 
 async function requestCrypto(amountUsd, destination) {
@@ -220,7 +222,13 @@ function hookCryptoRequested() {
   color: var(--text-secondary);
   margin-bottom: 16px;
   margin-top: 4px;
-  display: boock;
+  display: block;
+}
+
+.wallet-address-text {
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
 }
 
 .options {
