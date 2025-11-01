@@ -26,11 +26,18 @@
         </option>
       </select>
       <span
-        v-if="estimatedLocalCurrency && selectedCountryCode"
+        v-if="marketRate && selectedCountryCode"
         class="text-xs text-blue-800 mt-1 local-currency-estimate"
       >
-        ≈ <strong>{{ estimatedLocalCurrency }}</strong>
-        {{ selectedCurrency }}
+        $1 ≈
+        <strong>{{
+          formatAmount(
+            mode === "deposit"
+              ? marketRate.depositRate
+              : marketRate.withdrawalRate,
+            selectedCurrency
+          )
+        }}</strong>
       </span>
     </div>
 
@@ -199,25 +206,6 @@ watch(selectedCurrency, (newCurrency) => {
     selectedCountryCode.value = null;
     marketRate.value = null;
   }
-});
-
-const estimatedLocalCurrency = computed(() => {
-  if (!amount.value || !marketRate.value || parseFloat(amount.value) <= 0) {
-    return null;
-  }
-
-  const usdcAmount = parseFloat(amount.value);
-  const rate =
-    props.mode === "deposit"
-      ? marketRate.value.depositRate
-      : marketRate.value.withdrawalRate;
-
-  if (!rate || rate <= 0) {
-    return null;
-  }
-
-  const localAmount = usdcAmount * rate;
-  return formatAmount(localAmount);
 });
 
 onMounted(() => {

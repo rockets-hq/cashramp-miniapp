@@ -3,12 +3,12 @@ export const shortenAddress = (address) => {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 };
 
-export const formatAmount = (amount) => {
+export const formatAmount = (amount, currency = "USD") => {
   if (!amount) return "";
-  return amount.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+  }).format(amount);
 };
 
 export const getCountryFlag = (countryCode) => {
