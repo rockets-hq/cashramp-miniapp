@@ -1,9 +1,15 @@
 <template>
   <div v-if="modelValue" class="modal-overlay" @click="handleOverlayClick">
     <div class="modal" @click.stop>
-      <div class="modal-header">
-        <h3 class="modal-title">{{ title }}</h3>
-        <button class="btn--reset modal-close" @click="close">×</button>
+      <div class="flex justify-between items-center p-4">
+        <h3 class="text-2xl font-bold text-gray-800">{{ title }}</h3>
+        <button class="btn--reset modal-close bg-gray-200" @click="close">
+          <div
+            class="bg-gray-200 rounded-full p-1 w-8 h-8 flex items-center justify-center"
+          >
+            <icon :icon="['fas', 'xmark']" class="h-[16px] w-[16px]" />
+          </div>
+        </button>
       </div>
       <div class="modal-body">
         <slot />
@@ -73,28 +79,6 @@ onBeforeUnmount(() => {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px 8px 20px;
-}
-
-.modal-title {
-  font-size: 1.4rem;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-.modal-close {
-  appearance: none;
-  background: transparent;
-  border: none;
-  font-size: 1.8rem;
-  line-height: 1;
-  cursor: pointer;
 }
 
 .modal-body {

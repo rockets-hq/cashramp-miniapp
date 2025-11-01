@@ -4,21 +4,27 @@
     <section class="hero-section">
       <img src="@/assets/cashramp.svg" alt="Cashramp" class="logo" />
       <div class="hero-content">
-        <div class="hero-text">
-          <h1 class="hero-headline bg-red-500">
+        <div>
+          <h1 class="text-4xl lg:text-5xl font-bold">
             Cash to USDC and back, instantly.
           </h1>
-          <p class="hero-subheadline">
+          <p class="mt-2 mb-8 text-gray-500 text-normal lg:text-xl">
             Add cash from your Bank or MoMo account. Pay across Africa or cash
             out anytime.
           </p>
         </div>
-        <div class="buttons-container">
-          <button class="btn--primary" @click="openModal('deposit')">
-            Add cash
+        <div class="flex flex-row gap-4 justify-center">
+          <button
+            class="btn--primary lg:min-w-[120px]"
+            @click="openModal('deposit')"
+          >
+            <span class="mr-2"><icon :icon="['fas', 'plus']" /></span> Add cash
           </button>
-          <button class="btn--outline" @click="openModal('withdraw')">
-            Cash out
+          <button
+            class="btn--outline lg:min-w-[120px]"
+            @click="openModal('withdraw')"
+          >
+            <span class="mr-2"><icon :icon="['fas', 'minus']" /></span> Cash out
           </button>
         </div>
       </div>
@@ -26,8 +32,11 @@
 
     <section v-if="countries.length > 0" class="countries-section">
       <div class="section-header">
-        <h2 class="section-title">Pay across Africa</h2>
-        <p class="section-subtitle">
+        <h2 class="text-3xl font-bold text-gray-800">
+          Pay across Africa
+          <span><icon :icon="['fas', 'earth-africa']" /></span>
+        </h2>
+        <p class="text-gray-500 text-base lg:text-xl">
           Pay any Bank or MoMo account in Africa <strong>in minutes</strong>
           <span class="emoji" aria-label="fast">⚡️</span>
         </p>
@@ -53,40 +62,53 @@
     <!-- How It Works Section -->
     <section class="how-it-works-section">
       <div class="section-header">
-        <h2 class="section-title">How it works</h2>
-        <p class="section-subtitle">
+        <h2 class="text-3xl font-bold text-gray-800">How it works</h2>
+        <p class="text-gray-500 text-base lg:text-xl">
           The quick, secure way to go from cash to crypto — made for everyday
           Africans.
         </p>
       </div>
-      <div class="steps-container">
-        <div class="step">
-          <div class="step-number">1</div>
-          <div class="step-content">
-            <h3 class="step-title">Add cash</h3>
-            <p class="step-description">
-              Deposit money from your Bank or MoMo. Your funds are instantly
-              converted to USDC and sent to your wallet.
+      <div class="explanations-container">
+        <div class="explanation">
+          <div class="explanation-icon"><icon :icon="['fas', 'globe']" /></div>
+          <div class="explanation-content">
+            <h3 class="explanation-title">P2P agent network</h3>
+            <p class="explanation-description">
+              Cashramp connects you to a continent-wide network of trusted
+              agents, making it possible to seamlessly go from cash to USDC and
+              back.
             </p>
           </div>
         </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <div class="step-content">
-            <h3 class="step-title">Pay across Africa</h3>
-            <p class="step-description">
-              Instantly cash out your USDC to any Bank or MoMo account in
-              Africa.
+        <div class="explanation">
+          <div class="explanation-icon"><icon :icon="['fas', 'plus']" /></div>
+          <div class="explanation-content">
+            <h3 class="explanation-title">Adding cash</h3>
+            <p class="explanation-description">
+              Add cash from your Bank or MoMo account in seconds. Your deposit
+              is instantly converted to USDC and delivered to your wallet.
             </p>
           </div>
         </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <div class="step-content">
-            <h3 class="step-title">Cash out</h3>
-            <p class="step-description">
-              Withdraw USDC to your Bank or MoMo account anytime. Funds arrive
-              in your preferred currency.
+        <div class="explanation">
+          <div class="explanation-icon">
+            <icon :icon="['fas', 'paper-plane']" />
+          </div>
+          <div class="explanation-content">
+            <h3 class="explanation-title">Paying across Africa</h3>
+            <p class="explanation-description">
+              Whether it's a friend, family member, or a business, you can send
+              local currency directly to their Bank or MoMo account.
+            </p>
+          </div>
+        </div>
+        <div class="explanation">
+          <div class="explanation-icon"><icon :icon="['fas', 'minus']" /></div>
+          <div class="explanation-content">
+            <h3 class="explanation-title">Cashing out</h3>
+            <p class="explanation-description">
+              Instantly withdraw USDC to your Bank or MoMo account. Receive your
+              money in your local currency within minutes.
             </p>
           </div>
         </div>
@@ -135,63 +157,24 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+@reference "tailwindcss";
+
 .app-container {
   width: 45%;
   margin: 0 auto;
 }
 
 .hero-section {
-  text-align: center;
-  background-color: var(--background-color);
-  padding: 64px 32px;
+  @apply text-center bg-blue-100 p-16;
   border-radius: 0 0 32px 32px;
 }
 
 .logo {
-  height: 24px;
-  margin-bottom: 48px;
+  @apply h-6 mb-12;
 }
 
 .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.hero-text {
-  margin-bottom: 28px;
-}
-
-.hero-headline {
-  font-size: 3.5rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 8px;
-  color: #000;
-}
-
-.hero-headline .emoji {
-  display: inline-block;
-  margin-left: 8px;
-  font-size: 3rem;
-  vertical-align: middle;
-}
-
-.hero-subheadline {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
-
-.buttons-container button {
-  min-width: 200px;
+  @apply max-w-2xl mx-auto;
 }
 
 .countries-section {
@@ -199,201 +182,103 @@ onMounted(async () => {
 }
 
 .section-header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #000;
-}
-
-.section-subtitle {
-  font-size: 1.125rem;
-  color: var(--text-secondary);
+  @apply text-center mb-12;
 }
 
 .countries-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 40px;
+  @apply grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-7xl mx-auto;
 }
 
 .country-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  background: #fff;
-  transition: all 0.2s ease;
+  @apply flex items-center gap-4 px-4 p-2 bg-white rounded-xl border border-gray-200 transition-all duration-300;
 }
 
 .country-card:hover {
-  border-color: var(--primary-color);
-  box-shadow: 0 4px 12px rgba(0, 53, 222, 0.1);
-  transform: translateY(-2px);
+  @apply border-indigo-500 shadow-md transform -translate-y-1;
 }
 
 .country-flag {
-  font-size: 2rem;
+  @apply text-2xl leading-none;
   line-height: 1;
 }
 
 .country-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
+  @apply flex flex-col gap-1 flex-1;
 }
 
 .country-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: #000;
+  @apply font-semibold text-sm text-gray-800;
 }
 
 .country-currency {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+  @apply text-sm text-gray-500;
 }
 
 .how-it-works-section {
   padding: 64px 0;
 }
 
-.steps-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
-  margin-top: 48px;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+.explanations-container {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 max-w-7xl mx-auto;
 }
 
-.step {
-  display: flex;
-  gap: 20px;
-  padding: 24px;
-  background: #fff;
-  border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+.explanation {
+  @apply flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-200 transition-all duration-300;
 }
 
-.step:hover {
-  border-color: var(--primary-color);
-  box-shadow: 0 8px 24px rgba(0, 53, 222, 0.12);
-  transform: translateY(-4px);
+.explanation:hover {
+  @apply border-indigo-500 shadow-md transform -translate-y-2;
 }
 
-.step-number {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 700;
+.explanation-icon {
+  @apply flex-shrink-0 w-12 h-12 rounded-full bg-blue-800 text-white flex items-center justify-center text-2xl font-bold;
 }
 
-.step-content {
-  flex: 1;
+.explanation-content {
+  @apply flex-1;
 }
 
-.step-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #000;
+.explanation-title {
+  @apply text-xl font-semibold mb-1 text-gray-800;
 }
 
-.step-description {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+.explanation-description {
+  @apply text-sm text-gray-500 leading-relaxed;
 }
 
 @media screen and (max-width: 768px) {
   .app-container {
-    width: 100%;
+    @apply w-full;
   }
 
   .hero-section {
-    padding: 64px 24px;
+    @apply p-12;
   }
 
   .logo {
-    height: 20px;
-    margin-bottom: 24px;
-  }
-
-  .hero-headline {
-    font-size: 2.4rem;
-  }
-
-  .hero-headline .emoji {
-    font-size: 2rem;
-  }
-
-  .hero-subheadline {
-    font-size: 1rem;
+    @apply h-5 mb-8;
   }
 
   .countries-section,
   .how-it-works-section {
-    padding: 48px 24px;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .section-subtitle {
-    font-size: 1rem;
-  }
-
-  .countries-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
+    @apply py-12 px-4;
   }
 
   .country-card {
-    padding: 12px;
+    @apply flex items-center gap-4 px-4 p-2 bg-white rounded-xl border border-blue-200 transition-all duration-300;
   }
 
   .country-flag {
-    font-size: 1.5rem;
+    @apply text-2xl leading-none;
+    line-height: 1;
   }
 
-  .steps-container {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .explanations-container {
+    @apply grid grid-cols-1 gap-8 mt-12 max-w-7xl mx-auto;
   }
 
-  .step {
-    padding: 20px;
-  }
-
-  .buttons-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .buttons-container button {
-    width: 120px !important;
-    min-width: auto;
+  .explanation {
+    @apply flex items-center gap-4 p-4 bg-white rounded-2xl border border-blue-200 transition-all duration-300;
   }
 }
 </style>

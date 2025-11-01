@@ -1,10 +1,20 @@
 <template>
   <Modal v-model="open" :title="computedTitle">
-    <label class="section-label">Wallet address</label>
-    <p class="wallet-address-text">{{ shortenAddress(address) || "N/A" }}</p>
+    <label>Wallet address</label>
+    <div class="flex justify-between w-full items-center mb-4">
+      <p class="text-lg font-bold">
+        {{ shortenAddress(address) || "N/A" }}
+      </p>
+      <button class="btn--reset" @click="copyToClipboard(address)">
+        <icon
+          :icon="['fas', 'copy']"
+          class="wallet-address-copy h-[16px] w-[16px]"
+        />
+      </button>
+    </div>
 
-    <label for="country" class="section-label">Country</label>
-    <select id="country" v-model="selectedCurrency" class="input">
+    <label>Country</label>
+    <select id="country" v-model="selectedCurrency" class="input mb-4">
       <option
         v-for="country in countries"
         :key="country.currency.isoCode"
@@ -21,8 +31,8 @@
         <span class="usdc-text">USDC</span>
       </template>
     </AmountInput>
-    <span class="wallet-balance-text"
-      ><strong>{{ usdcBalance }}</strong> USDC available</span
+    <span class="text-sm text-gray-500 mt-1"
+      ><strong>{{ usdcBalance }}</strong> USDC balance</span
     >
 
     <template #footer>
@@ -64,7 +74,9 @@ import {
   ERC20_TRANSFER_ABI,
 } from "@/utilities/constants";
 import { useToast } from "vue-toast-notification";
+import { useCopyToClipboard } from "@/composables/useCopyToClipboard";
 
+const { copyToClipboard } = useCopyToClipboard();
 const { address } = useConnectMiniApp();
 const { usdcBalance } = useUSDCBalance();
 const { writeContractAsync } = useWriteContract();
@@ -227,7 +239,7 @@ function hookCryptoRequested() {
 
 .wallet-address-text {
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin-bottom: 16px;
 }
 

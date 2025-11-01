@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@reference "tailwindcss";
 
 :root {
-  --primary-color: #0035de;
   --text-primary: rgba(0, 0, 0, 0.87);
   --text-secondary: rgba(0, 0, 0, 0.54);
   --background-color: #cfdaff;
@@ -14,56 +14,25 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 #app {
   min-height: 100vh;
   width: 100vw;
-  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 label {
+  @apply text-sm mb-1 text-gray-500 block;
   display: block;
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-}
-
-.mb-8 {
-  margin-bottom: 8px;
-}
-
-.mb-16 {
-  margin-bottom: 16px;
-}
-
-.mb-32 {
-  margin-bottom: 32px;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.font-bold {
-  font-weight: bold;
-}
-
-.text--primary {
-  color: var(--primary-color);
 }
 
 input,
 select {
-  height: 48px;
-  border-radius: 8px;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  padding: 0 16px;
-  font-size: 1rem;
-  width: 100%;
+  @apply w-full h-[48px] outline-none border border-gray-200 rounded-xl px-4 text-base font-semibold cursor-pointer transition-all duration-300 flex items-center justify-center;
 
   &:focus {
-    outline: none;
-    border-color: var(--primary-color);
+    @apply border-blue-400;
   }
 }
 
@@ -81,7 +50,7 @@ select {
 
 select:focus {
   outline: none;
-  border-color: var(--primary-color);
+  @apply border-blue-800;
 }
 
 select::-ms-expand {
@@ -89,49 +58,28 @@ select::-ms-expand {
 }
 
 button {
-  height: 48px;
-  min-width: 200px;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @apply h-12 rounded-full px-6 text-base font-semibold cursor-pointer transition-all duration-300 border-none flex items-center justify-center;
 
   &:hover {
-    transform: translateY(-2px);
+    @apply transform -translate-y-2;
   }
 
   &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    @apply opacity-50 cursor-not-allowed;
   }
 }
 
 .btn--primary {
-  background-color: var(--primary-color);
+  @apply bg-blue-800 text-white;
   color: white;
 }
 
 .btn--outline {
-  background-color: transparent;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
+  @apply bg-white text-blue-800 border border-blue-400;
 }
 
 .btn--reset {
-  width: auto;
-  height: auto;
-  min-width: auto;
-  padding: 0;
-  background: transparent;
-  border: none;
-  font-size: 1.8rem;
-  line-height: 1;
-  cursor: pointer;
+  @apply w-auto h-auto p-0 bg-transparent border-none text-2xl leading-none cursor-pointer;
 }
 
 @media screen and (max-width: 768px) {

@@ -10,8 +10,24 @@ import "vue-toast-notification/dist/theme-default.css";
 import App from "./App.vue";
 import "./assets/main.css";
 
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
-library.add(faCopy);
+import {
+  faCopy,
+  faPlus,
+  faMinus,
+  faEarthAfrica,
+  faGlobe,
+  faPaperPlane,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(
+  faCopy,
+  faPlus,
+  faMinus,
+  faEarthAfrica,
+  faGlobe,
+  faPaperPlane,
+  faXmark
+);
 
 const app = createApp(App);
 app.use(VueQueryPlugin);
