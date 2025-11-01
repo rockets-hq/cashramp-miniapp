@@ -5,7 +5,9 @@
       <img src="@/assets/cashramp.svg" alt="Cashramp" class="logo" />
       <div class="hero-content">
         <div class="hero-text">
-          <h1 class="hero-headline">Cash to USDC and back, instantly.</h1>
+          <h1 class="hero-headline bg-red-500">
+            Cash to USDC and back, instantly.
+          </h1>
           <p class="hero-subheadline">
             Add cash from your Bank or MoMo account. Pay across Africa or cash
             out anytime.
@@ -32,7 +34,9 @@
       </div>
       <div class="countries-grid">
         <div
-          v-for="country in countries"
+          v-for="country in countries.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          )"
           :key="country.code"
           class="country-card"
         >
