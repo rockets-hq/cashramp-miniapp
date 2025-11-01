@@ -60,7 +60,7 @@ import {
   ERC20_TRANSFER_ABI,
 } from "@/utilities/constants";
 
-const { address, getUsdcBalance } = useConnectMiniApp();
+const { address, walletUsdcBalance } = useConnectMiniApp();
 const { writeContractAsync } = useWriteContract();
 
 const props = defineProps({
@@ -132,12 +132,6 @@ onMounted(async () => {
   hookCryptoRequested();
   updateWalletUsdcBalance();
 });
-
-const walletUsdcBalance = ref(0);
-async function updateWalletUsdcBalance() {
-  const balance = await getUsdcBalance();
-  walletUsdcBalance.value = parseFloat(balance).toFixed(USDC_DECIMALS);
-}
 
 async function requestCrypto(amountUsd, destination) {
   try {
