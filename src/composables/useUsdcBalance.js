@@ -11,7 +11,6 @@ export function useUSDCBalance() {
   const usdcBalance = ref("0.00");
 
   const fetchBalance = async () => {
-    $toast.info("Fetching USDC balance...");
     if (!address.value) {
       $toast.error("Wallet not connected");
       return;
@@ -44,7 +43,6 @@ export function useUSDCBalance() {
 
       const result = await response.json();
       if (result.error) {
-        $toast.error("Error fetching USDC balance");
         return;
       }
 
@@ -52,9 +50,7 @@ export function useUSDCBalance() {
         Number(BigInt(result.result)) /
         10 ** USDC_DECIMALS
       ).toFixed(2);
-      $toast.success("USDC balance fetched successfully: " + usdcBalance.value);
     } catch (err) {
-      $toast.error("Error fetching USDC balance: " + err.message);
       console.error("Error fetching USDC balance:", err);
     }
   };

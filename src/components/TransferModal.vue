@@ -78,7 +78,7 @@ import { useCopyToClipboard } from "@/composables/useCopyToClipboard";
 
 const { copyToClipboard } = useCopyToClipboard();
 const { address } = useConnectMiniApp();
-const { usdcBalance } = useUSDCBalance();
+const { usdcBalance, fetchBalance } = useUSDCBalance();
 const { writeContractAsync } = useWriteContract();
 const $toast = useToast();
 
@@ -149,6 +149,7 @@ async function getCountries() {
 onMounted(() => {
   getCountries();
   hookCryptoRequested();
+  fetchBalance();
 });
 
 async function requestCrypto(amountUsd, destination) {
