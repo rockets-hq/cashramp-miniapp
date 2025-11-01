@@ -27,11 +27,11 @@
 
     <AmountInput v-model="amount" title="Amount">
       <template #suffix>
-        <img src="@/assets/usdc.webp" alt="USDC" class="usdc-icon" />
-        <span class="usdc-text">USDC</span>
+        <img src="@/assets/usdc.webp" alt="USDC" class="h-4 w-4" />
+        <span class="text-sm font-semibold text-gray-500">USDC</span>
       </template>
     </AmountInput>
-    <span class="text-sm text-gray-500 mt-1"
+    <span class="text-xs text-gray-500 mt-1"
       ><strong>{{ usdcBalance }}</strong> USDC balance</span
     >
 
