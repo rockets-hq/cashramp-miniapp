@@ -51,11 +51,10 @@
       <div class="section-header">
         <h2 class="text-3xl font-bold text-gray-800">
           Send money anywhere in Africa
-          <span><icon :icon="['fas', 'earth-africa']" /></span>,
-          <span class="text-blue-800">instantly.</span>
+          <span><icon :icon="['fas', 'earth-africa']" /></span>
         </h2>
         <p class="mt-2 text-gray-500 text-lg lg:text-xl">
-          Pay any Bank or MoMo account in Africa <strong>in seconds</strong>
+          Pay any Bank or MoMo account within Africa <strong>in seconds</strong>
           <span class="emoji" aria-label="fast">⚡️</span>
         </p>
       </div>
@@ -82,7 +81,8 @@
       <div class="section-header">
         <h2 class="text-3xl font-bold text-gray-800">How it works</h2>
         <p class="mt-2 text-gray-500 text-lg lg:text-xl">
-          The fastest, most reliable way to move money in and out of USDC.
+          The easiest, fastest, and most reliable way to send money across
+          Africa.
         </p>
       </div>
       <div class="explanations-container">
@@ -92,7 +92,7 @@
             <h3 class="explanation-title">P2P agent network</h3>
             <p class="explanation-description">
               Cashramp connects you to trusted agents across Africa, making it
-              possible to seamlessly go from cash to USDC and back as,
+              possible to seamlessly go from cash to USDC and back,
               <span class="font-bold text-blue-800">easy as MoMo</span>.
             </p>
           </div>
@@ -127,9 +127,10 @@
           <div class="explanation-content">
             <h3 class="explanation-title">Cashing out</h3>
             <p class="explanation-description">
-              Instantly withdraw USDC to your Bank or MoMo account. Receive your
-              money in your preferred local currency
-              <span class="font-bold text-blue-800">within minutes</span>.
+              Instantly withdraw USDC to your
+              <span class="font-bold text-blue-800">Bank or MoMo account</span>.
+              Receive your money in your preferred local currency
+              <span class="font-bold text-blue-800">in seconds</span>.
             </p>
           </div>
         </div>
