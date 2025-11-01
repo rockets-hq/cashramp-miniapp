@@ -14,7 +14,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Momo Trust Sabs", ui-sans-serif, system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Momo Trust Display", ui-sans-serif, system-ui, sans-serif;
 }
 
 label {
@@ -75,6 +81,10 @@ button {
 
 .btn--reset {
   @apply w-auto h-auto p-0 bg-transparent border-none text-2xl leading-none cursor-pointer;
+
+  &:hover {
+    @apply -translate-y-0;
+  }
 }
 
 @media screen and (max-width: 768px) {
