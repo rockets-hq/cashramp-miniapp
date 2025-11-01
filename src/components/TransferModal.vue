@@ -59,9 +59,11 @@ import {
   USDC_DECIMALS,
   ERC20_TRANSFER_ABI,
 } from "@/utilities/constants";
+import { useToast } from "vue-toast-notification";
 
 const { address, walletUsdcBalance } = useConnectMiniApp();
 const { writeContractAsync } = useWriteContract();
+const $toast = useToast();
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
@@ -123,7 +125,7 @@ async function getCountries() {
     const result = await cashrampClient.getAvailableCountries();
     countries.value = result;
   } catch (err) {
-    console.error("Failed to load countries:", err);
+    $toast.error(`Failed to load countries: ${err.message}`);
   }
 }
 
@@ -151,11 +153,11 @@ async function requestCrypto(amountUsd, destination) {
       args: [destination, amountInUnits],
     });
 
-    alert(`Transfer initiated: ${hash}`);
+    $toast.success(`Transfer initiated: ${hash}`);
     return hash;
   } catch (error) {
-    console.error("Error requesting crypto:", error);
-    alert(error.message);
+    $toast.error(`Error requesting crypto: ${error.message}`);
+    return null;
   }
 }
 

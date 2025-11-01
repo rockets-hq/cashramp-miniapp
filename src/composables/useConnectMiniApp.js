@@ -8,8 +8,10 @@ import {
   USDC_DECIMALS,
   ERC20_BALANCE_ABI,
 } from "@/utilities/constants";
+import { useToast } from "vue-toast-notification";
 
 export function useConnectMiniApp() {
+  const $toast = useToast();
   const { address, connect } = useAccount();
   const walletUsdcBalance = ref(0);
 
@@ -24,6 +26,7 @@ export function useConnectMiniApp() {
 
   async function getUsdcBalance() {
     if (!address.value) {
+      $toast.error("Wallet not connected");
       return;
     }
 
@@ -37,7 +40,7 @@ export function useConnectMiniApp() {
 
       walletUsdcBalance.value = formatUnits(balance, USDC_DECIMALS);
     } catch (error) {
-      console.error("Error fetching USDC balance:", error);
+      $toast.error(`Error fetching USDC balance: ${error.message}`);
       walletUsdcBalance.value = 0;
     }
   }
