@@ -43,8 +43,8 @@
       </div>
       <div class="countries-grid">
         <div
-          v-for="country in countries.sort((a, b) =>
-            a.name.localeCompare(b.name)
+          v-for="country in countries.sort(
+            (a, b) => a.name.length - b.name.length
           )"
           :key="country.code"
           class="country-card"
@@ -193,7 +193,7 @@ onMounted(async () => {
 }
 
 .country-card {
-  @apply flex items-center gap-4 px-4 p-2 bg-white rounded-xl border border-gray-200 transition-all duration-300;
+  @apply flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-500 transition-all duration-300;
 }
 
 .country-card:hover {
@@ -226,7 +226,7 @@ onMounted(async () => {
 }
 
 .explanation {
-  @apply flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-200 transition-all duration-300;
+  @apply flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-500 transition-all duration-300;
 }
 
 .explanation:hover {
@@ -267,21 +267,8 @@ onMounted(async () => {
     @apply py-12 px-4;
   }
 
-  .country-card {
-    @apply flex items-center gap-4 px-4 p-2 bg-white rounded-xl border border-blue-200 transition-all duration-300;
-  }
-
-  .country-flag {
-    @apply text-2xl leading-none;
-    line-height: 1;
-  }
-
   .explanations-container {
     @apply grid grid-cols-1 gap-8 mt-12 max-w-7xl mx-auto;
-  }
-
-  .explanation {
-    @apply flex items-center gap-4 p-4 bg-white rounded-2xl border border-blue-200 transition-all duration-300;
   }
 }
 </style>

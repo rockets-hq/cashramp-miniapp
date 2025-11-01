@@ -148,7 +148,6 @@ async function getCountries() {
 onMounted(() => {
   getCountries();
   hookCryptoRequested();
-  fetchBalance();
 });
 
 async function requestCrypto(amountUsd, destination) {
