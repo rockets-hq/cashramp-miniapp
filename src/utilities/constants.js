@@ -4,9 +4,9 @@ export const ERC20_BALANCE_ABI = [
   {
     name: "balanceOf",
     type: "function",
-    stateMutability: "view",
-    inputs: [{ name: "account", type: "address" }],
-    outputs: [{ name: "", type: "uint256" }],
+    constant: true,
+    inputs: [{ name: "_owner", type: "address" }],
+    outputs: [{ name: "balance", type: "uint256" }],
   },
 ];
 export const ERC20_TRANSFER_ABI = [
