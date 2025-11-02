@@ -14,6 +14,7 @@ export class CashrampClient {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_CASHRAMP_PUBLIC_KEY}`,
       },
       body: JSON.stringify({ query, variables }),
     });

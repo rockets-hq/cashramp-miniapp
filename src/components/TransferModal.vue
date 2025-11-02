@@ -245,7 +245,7 @@ async function requestCrypto(amountUsd, destination) {
 }
 
 const confirmationAttempts = ref(0);
-const MAX_CONFIRMATION_ATTEMPTS = 25;
+const MAX_CONFIRMATION_ATTEMPTS = 10;
 function pollConfirmation(paymentRequestId, hash) {
   if (confirmationAttempts.value >= MAX_CONFIRMATION_ATTEMPTS) {
     return;
@@ -270,8 +270,6 @@ function hookCryptoRequested() {
         const paymentRequestId = payload.paymentRequest;
 
         const hash = await requestCrypto(amountUsd, destination);
-        showIframe.value = false;
-        $toast.success(`Crypto request initiated: ${hash}`);
         pollConfirmation(paymentRequestId, hash);
       }
     }
