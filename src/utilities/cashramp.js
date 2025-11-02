@@ -1,5 +1,9 @@
 // Docs: https://docs.cashramp.co/cashramp/cashramp-api/queries
 
+import { useToast } from "vue-toast-notification";
+
+const $toast = useToast();
+
 export class CashrampClient {
   constructor() {
     this.endpoint = import.meta.env.VITE_CASHRAMP_API_URL;
@@ -74,6 +78,8 @@ export class CashrampClient {
       paymentRequest: paymentRequestId,
       transactionHash,
     });
+
+    $toast.success(`Transaction confirmed: ${JSON.stringify(data)}`);
 
     return data?.confirmTransaction ?? null;
   }

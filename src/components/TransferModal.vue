@@ -270,6 +270,8 @@ function hookCryptoRequested() {
         const paymentRequestId = payload.paymentRequest;
 
         const hash = await requestCrypto(amountUsd, destination);
+        showIframe.value = false;
+        $toast.success(`Crypto request initiated: ${hash}`);
         pollConfirmation(paymentRequestId, hash);
       }
     }
