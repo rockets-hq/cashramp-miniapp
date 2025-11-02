@@ -245,7 +245,7 @@ async function requestCrypto(amountUsd, destination) {
 }
 
 const confirmationAttempts = ref(0);
-const MAX_CONFIRMATION_ATTEMPTS = 10;
+const MAX_CONFIRMATION_ATTEMPTS = 5;
 function pollConfirmation(paymentRequestId, hash) {
   if (confirmationAttempts.value >= MAX_CONFIRMATION_ATTEMPTS) {
     return;
