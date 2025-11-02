@@ -237,9 +237,6 @@ async function requestCrypto(amountUsd, destination) {
       args: [destination, amountInUnits],
     });
 
-    $toast.success(
-      `Withdrawal successfully initiated. You'll receive your ${selectedCurrency.value} in your account shortly.`
-    );
     return hash;
   } catch (error) {
     $toast.error(`Error requesting crypto: ${error.message}`);
@@ -247,21 +244,19 @@ async function requestCrypto(amountUsd, destination) {
   }
 }
 
-const pollConfirmationInterval = ref(null);
+const confirmationAttempts = ref(0);
+const MAX_CONFIRMATION_ATTEMPTS = 10;
 function pollConfirmation(paymentRequestId, hash) {
-  if (pollConfirmationInterval.value) {
-    clearInterval(pollConfirmationInterval.value);
+  if (confirmationAttempts.value >= MAX_CONFIRMATION_ATTEMPTS) {
     return;
   }
 
-  pollConfirmationInterval.value = setInterval(async () => {
-    const confirmation = await cashrampClient.confirmTransaction(
-      paymentRequestId,
-      hash
-    );
-    if (confirmation) {
-      clearInterval(pollConfirmationInterval.value);
-    }
+  cashrampClient.confirmTransaction(paymentRequestId, hash).then(() => {
+    confirmationAttempts.value++;
+  });
+
+  setTimeout(() => {
+    pollConfirmation(paymentRequestId, hash);
   }, 6000);
 }
 
