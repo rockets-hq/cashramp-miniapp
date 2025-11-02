@@ -237,6 +237,10 @@ async function requestCrypto(amountUsd, destination) {
       args: [destination, amountInUnits],
     });
 
+    showIframe.value = false;
+    setTimeout(() => {
+      showIframe.value = true;
+    }, 10000);
     $toast.success(`Transfer initiated: ${hash}`);
     return hash;
   } catch (error) {
