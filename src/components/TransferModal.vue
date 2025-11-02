@@ -245,7 +245,7 @@ async function requestCrypto(amountUsd, destination) {
 }
 
 const confirmationAttempts = ref(0);
-const MAX_CONFIRMATION_ATTEMPTS = 5;
+const MAX_CONFIRMATION_ATTEMPTS = 10;
 function pollConfirmation(paymentRequestId, hash) {
   if (confirmationAttempts.value >= MAX_CONFIRMATION_ATTEMPTS) {
     return;
@@ -257,7 +257,7 @@ function pollConfirmation(paymentRequestId, hash) {
 
   setTimeout(() => {
     pollConfirmation(paymentRequestId, hash);
-  }, 6000);
+  }, 5000);
 }
 
 function hookCryptoRequested() {
