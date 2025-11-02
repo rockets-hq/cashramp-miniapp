@@ -237,11 +237,9 @@ async function requestCrypto(amountUsd, destination) {
       args: [destination, amountInUnits],
     });
 
-    showIframe.value = false;
-    setTimeout(() => {
-      showIframe.value = true;
-    }, 10000);
-    $toast.success(`Transfer initiated: ${hash}`);
+    $toast.success(
+      `Withdrawal successfully initiated. You'll receive your ${selectedCurrency.value} in your account shortly.`
+    );
     return hash;
   } catch (error) {
     $toast.error(`Error requesting crypto: ${error.message}`);

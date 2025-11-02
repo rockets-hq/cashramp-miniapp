@@ -5,7 +5,7 @@ export class CashrampClient {
     this.endpoint = import.meta.env.VITE_CASHRAMP_API_URL;
   }
 
-  async _post(query, variables = undefined) {
+  async _post(query, variables = {}) {
     const response = await fetch(this.endpoint, {
       method: "POST",
       headers: {
@@ -65,7 +65,7 @@ export class CashrampClient {
 
   async confirmTransaction(paymentRequestId, transactionHash) {
     const query = `
-      mutation ($paymentRequest: String!, $transactionHash: String!) {
+      mutation ($paymentRequest: ID!, $transactionHash: String!) {
         confirmTransaction(paymentRequest: $paymentRequest, transactionHash: $transactionHash)
       }
     `;
