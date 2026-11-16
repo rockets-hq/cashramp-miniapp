@@ -8,6 +8,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 
 import App from "./App.vue";
+import { initErrorReporting } from "./utilities/errorReporting";
 import "./assets/main.css";
 
 import {
@@ -30,6 +31,7 @@ library.add(
 );
 
 const app = createApp(App);
+initErrorReporting(app);
 app.use(VueQueryPlugin);
 app.use(WagmiPlugin, { config: wagmiConfig });
 app.use(ToastPlugin, { position: "top-left", duration: 5000 });
